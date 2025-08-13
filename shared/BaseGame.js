@@ -5,7 +5,7 @@ class BaseGame {
     this.scene = null;
     this.camera = null;
     this.light = null;
-    this.client = new Colyseus.Client('ws://localhost:3000');
+    this.client = new Colyseus.Client('ws://localhost:3001');
     this.room = null;
     this.mySessionId = null;
     this.gameState = null;

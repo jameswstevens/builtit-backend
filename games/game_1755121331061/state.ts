@@ -1,4 +1,4 @@
-// Game 896 - Game State
+// Me The Most Simple - Game State
 import { Schema, type, MapSchema } from "@colyseus/schema";
 
 export class Player extends Schema {

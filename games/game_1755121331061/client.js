@@ -1,5 +1,5 @@
-// Game 896 - Client Side (3D)
-class Game896Game extends BaseGame {
+// Me The Most Simple - Client Side (3D)
+class MeTheMostSimpleGame extends BaseGame {
   constructor(canvasId) {
     super(canvasId);
   }
@@ -66,7 +66,7 @@ class Game896Game extends BaseGame {
 }
 
 // Initialize and connect
-const game = new Game896Game('gameCanvas');
-game.connectToGame('game_1755120361896').then(() => {
+const game = new MeTheMostSimpleGame('gameCanvas');
+game.connectToGame('game_1755121331061').then(() => {
   game.startGameLoop();
 });

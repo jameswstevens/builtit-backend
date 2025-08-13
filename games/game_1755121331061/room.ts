@@ -1,8 +1,8 @@
-// Game 896 - Server Room
+// Me The Most Simple - Server Room
 import { Room, Client } from "colyseus";
 import { GameState, Player } from "./state";
 
-export class Game896Room extends Room<GameState> {
+export class MeTheMostSimpleRoom extends Room<GameState> {
   maxClients = 4;
 
   onCreate(options: any) {

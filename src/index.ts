@@ -14,6 +14,7 @@ dotenv.config();
 const port = Number(process.env.PORT || 3000);
 const app = express();
 
+// Simple CORS setup - allow everything in development
 app.use(cors());
 app.use(express.json());
 
@@ -200,7 +201,7 @@ app.get('/api/games-with-sessions', async (req, res) => {
   }
 });
 
-// Serve lobby
+// Serve lobby  
 app.use('/', express.static(path.join(__dirname, '../public')));
 
 const server = createServer(app);
