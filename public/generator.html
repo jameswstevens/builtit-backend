@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Generator - BuildIt</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #0a0a0a;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: Arial, sans-serif;
+            color: white;
+        }
+        
+        .container {
+            max-width: 800px;
+            width: 100%;
+            padding: 20px;
+        }
+        
+        h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            background: linear-gradient(45deg, #9C27B0, #E91E63);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-align: center;
+        }
+        
+        .subtitle {
+            font-size: 20px;
+            color: #888;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+        
+        .generator-form {
+            background: #1a1a1a;
+            border: 2px solid #333;
+            border-radius: 15px;
+            padding: 40px;
+        }
+        
+        .form-group {
+            margin-bottom: 30px;
+        }
+        
+        label {
+            display: block;
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: #ddd;
+        }
+        
+        textarea {
+            width: 100%;
+            min-height: 150px;
+            padding: 15px;
+            background: #0a0a0a;
+            border: 2px solid #333;
+            border-radius: 10px;
+            color: white;
+            font-size: 16px;
+            font-family: Arial, sans-serif;
+            resize: vertical;
+            box-sizing: border-box;
+        }
+        
+        textarea:focus {
+            outline: none;
+            border-color: #9C27B0;
+        }
+        
+        .button-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+        
+        button {
+            flex: 1;
+            padding: 15px 30px;
+            font-size: 18px;
+            font-weight: bold;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .generate-btn {
+            background: linear-gradient(45deg, #9C27B0, #E91E63);
+            color: white;
+        }
+        
+        .generate-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(156, 39, 176, 0.4);
+        }
+        
+        .generate-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .back-btn {
+            background: #333;
+            color: white;
+        }
+        
+        .back-btn:hover {
+            background: #444;
+        }
+        
+        .status {
+            margin-top: 30px;
+            padding: 20px;
+            background: #1a1a1a;
+            border: 2px solid #333;
+            border-radius: 10px;
+            display: none;
+        }
+        
+        .status.show {
+            display: block;
+        }
+        
+        .status.generating {
+            border-color: #9C27B0;
+        }
+        
+        .status.success {
+            border-color: #4CAF50;
+        }
+        
+        .status.error {
+            border-color: #F44336;
+        }
+        
+        .status-title {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .status-message {
+            color: #aaa;
+            line-height: 1.6;
+        }
+        
+        .loading-spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid #333;
+            border-top-color: #9C27B0;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-right: 10px;
+            vertical-align: middle;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        .example-prompts {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .example-prompts h3 {
+            color: #888;
+            margin-bottom: 10px;
+        }
+        
+        .example-prompts ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .example-prompts li {
+            margin-bottom: 8px;
+            padding-left: 20px;
+            position: relative;
+        }
+        
+        .example-prompts li:before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: #9C27B0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>3D Game Generator</h1>
+        <p class="subtitle">Describe your game idea and let AI create a 3D multiplayer game using Babylon.js</p>
+        
+        <div class="generator-form">
+            <form id="gameGeneratorForm">
+                <div class="form-group">
+                    <label for="gamePrompt">Describe Your Game</label>
+                    <textarea 
+                        id="gamePrompt" 
+                        name="gamePrompt" 
+                        placeholder="Describe the 3D multiplayer game you want to create. Be specific about gameplay mechanics, rules, and objectives. The game will be built using Babylon.js for 3D graphics..."
+                        required
+                    ></textarea>
+                </div>
+                
+                <div class="example-prompts">
+                    <h3>Example prompts:</h3>
+                    <ul>
+                        <li>Create a 3D tank battle game where players control tanks in an arena</li>
+                        <li>Make a 3D platformer race where players compete to reach the finish line first</li>
+                        <li>Build a 3D dodgeball game where players throw balls at each other in an arena</li>
+                        <li>Design a 3D capture the flag game with obstacles and power-ups</li>
+                    </ul>
+                </div>
+                
+                <div class="button-group">
+                    <button type="button" class="back-btn" onclick="window.location.href='/'">
+                        Back to Games
+                    </button>
+                    <button type="submit" class="generate-btn" id="generateBtn">
+                        Generate Game
+                    </button>
+                </div>
+            </form>
+        </div>
+        
+        <div id="status" class="status">
+            <div class="status-title"></div>
+            <div class="status-message"></div>
+        </div>
+    </div>
+    
+    <script>
+        const form = document.getElementById('gameGeneratorForm');
+        const statusEl = document.getElementById('status');
+        const statusTitleEl = statusEl.querySelector('.status-title');
+        const statusMessageEl = statusEl.querySelector('.status-message');
+        const generateBtn = document.getElementById('generateBtn');
+        
+        function showStatus(type, title, message) {
+            statusEl.className = `status show ${type}`;
+            statusTitleEl.innerHTML = title;
+            statusMessageEl.innerHTML = message;
+        }
+        
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const prompt = document.getElementById('gamePrompt').value.trim();
+            if (!prompt) return;
+            
+            generateBtn.disabled = true;
+            showStatus('generating', '<span class="loading-spinner"></span>Generating Game...', 'This may take a few minutes. Please wait while AI creates your game.');
+            
+            try {
+                const response = await fetch('/api/generate-game', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ prompt })
+                });
+                
+                const result = await response.json();
+                
+                if (response.ok) {
+                    // Store the game ID in localStorage to track ownership
+                    const createdGames = JSON.parse(localStorage.getItem('createdGames') || '[]');
+                    createdGames.push(result.gameId);
+                    localStorage.setItem('createdGames', JSON.stringify(createdGames));
+                    
+                    showStatus('success', 'Game Generated Successfully!', 
+                        `Your game "${result.gameName}" has been created and is ready to play! <br><br>
+                        <a href="/games/${result.gameId}/" style="color: #4CAF50; text-decoration: none; font-weight: bold; font-size: 20px;">
+                            🎮 Play ${result.gameName} Now →
+                        </a>`
+                    );
+                } else {
+                    throw new Error(result.error || 'Failed to generate game');
+                }
+            } catch (error) {
+                showStatus('error', 'Generation Failed', 
+                    `Error: ${error.message}<br><br>Please try again with a different prompt.`
+                );
+            } finally {
+                generateBtn.disabled = false;
+            }
+        });
+    </script>
+</body>
+</html>

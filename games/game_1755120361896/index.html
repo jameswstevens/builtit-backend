@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game 896</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #0a0a0a;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: Arial, sans-serif;
+            overflow: hidden;
+        }
+        
+        #gameCanvas {
+            width: 100vw;
+            height: 100vh;
+            display: block;
+        }
+        
+        .game-info {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: white;
+            font-size: 24px;
+            text-align: center;
+            z-index: 10;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+        }
+    </style>
+</head>
+<body>
+    <div class="game-info">
+        <h1>Game 896</h1>
+        <div id="status">Waiting for players...</div>
+    </div>
+    
+    <canvas id="gameCanvas"></canvas>
+    
+    <script src="https://unpkg.com/colyseus.js@^0.16.0/dist/colyseus.js"></script>
+    <script src="https://cdn.babylonjs.com/babylon.js"></script>
+    <script src="https://cdn.babylonjs.com/loaders/babylonjs.loaders.min.js"></script>
+    <script src="https://cdn.babylonjs.com/gui/babylon.gui.min.js"></script>
+    <script src="https://cdn.babylonjs.com/materialsLibrary/babylonjs.materials.min.js"></script>
+    <!-- Core Game Scripts -->
+    <script src="../../shared/BaseGame.js"></script>
+    <script src="../../shared/PlayerModel.js"></script>
+    
+    <!-- Platform Layer -->
+    <script src="../../platform/NetworkManager.js"></script>
+    <script src="../../platform/InputManager.js"></script>
+    <script src="../../platform/UIKit.js"></script>
+    <script src="../../platform/PlatformServices.js"></script>
+    <script src="../../platform/PlatformUI.js"></script>
+    <link rel="stylesheet" href="../../platform/styles/platform.css">
+    
+    <!-- Game Client -->
+    <script src="client.js"></script>
+    
+    <!-- Initialize Platform -->
+    <script>
+        // Initialize platform UI after page loads
+        window.addEventListener('load', () => {
+            // Small delay to ensure all scripts are loaded
+            setTimeout(() => {
+                if (window.PlatformUI && window.PlatformUI.init) {
+                    window.PlatformUI.init({
+                        gameId: 'game_1755120361896',
+                        showImprove: true,
+                        showChat: false  // Chat not implemented yet
+                    });
+                } else {
+                    console.error('PlatformUI not loaded');
+                }
+            }, 100);
+        });
+    </script>
+</body>
+</html>
